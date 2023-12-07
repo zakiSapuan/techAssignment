@@ -1,33 +1,18 @@
 import React from "react";
 import { Button, Row, Col, Card, List, Typography } from "antd";
 import "../App.css";
-import { formItems } from "./constant";
+import { formItems, endTimeItem } from "./constant";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Acknowledgement = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const formValues = location.state;
+  const formValues = { ...location.state };
 
   if (!formValues) {
     navigate("/");
     return;
   }
-
-  const layout = {
-    labelCol: {
-      span: 8,
-    },
-    wrapperCol: {
-      span: 16,
-    },
-  };
-  const tailLayout = {
-    wrapperCol: {
-      offset: 8,
-      span: 16,
-    },
-  };
 
   return (
     <Row
@@ -55,8 +40,12 @@ const Acknowledgement = () => {
             // display: "flex",
             alignItems: " center",
             justifyContent: " center",
+            marginTop: "10%",
           }}
         >
+          <p style={{ fontSize: "0.9em", marginTop: 0 }}>
+            Please confirm your inputs and selections
+          </p>
           <Col
             span={24}
             style={{
@@ -66,8 +55,9 @@ const Acknowledgement = () => {
             }}
           >
             <List
+              style={{ textAlign: "left" }}
               bordered
-              dataSource={formItems}
+              dataSource={[...formItems, ...endTimeItem]}
               renderItem={(item) => (
                 <List.Item>
                   <Typography.Text mark>[{item.name}]</Typography.Text>
@@ -78,7 +68,11 @@ const Acknowledgement = () => {
               )}
             />
           </Col>
-          <Button type="primary" style={{ marginTop: "1em" }} href={"../"}>
+          <Button
+            type="primary"
+            style={{ marginTop: "1em", marginLeft: "1em" }}
+            href={"../"}
+          >
             Confirm
           </Button>
         </Card>

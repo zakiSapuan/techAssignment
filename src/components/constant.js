@@ -71,7 +71,7 @@ export const formItems = [
     type: "dropdown",
     values: bookingDuration,
     validation: "validateBookingTimeSlot",
-    helperText: "*Duration of booking cannot exceed past opening hours, 8PM",
+    helperText: "*Duration of booking cannot exceed past opening hours",
   },
 ];
 
@@ -90,3 +90,12 @@ export const tailLayout = {
     span: 16,
   },
 };
+
+export const endTimeItem = [
+  {
+    key: "endTime",
+    name: "End Time",
+    type: "textInput",
+    showPostText: "PM",
+  },
+];

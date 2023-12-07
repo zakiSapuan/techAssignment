@@ -6,13 +6,14 @@ import FormInput from "./formHelper/formInput";
 import FormDropdown from "./formHelper/formDropdown";
 import FormDatePicker from "./formHelper/formDatepicker";
 import validateForm from "./formHelper/formValidator";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import moment from "moment";
 
 const LandingPage = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
+  const location = useLocation();
   let listOfFormItems = [];
 
   // To pre-populate onClick function for each form input
@@ -26,7 +27,6 @@ const LandingPage = () => {
   }
 
   const updateFormValues = (key, value) => {
-    console.log("hii check:", { key, value });
     const newValues =
       key === "podNumber"
         ? {
@@ -48,12 +48,15 @@ const LandingPage = () => {
 
   const submitBookingForm = () => {
     const allFormValues = form.getFieldValue();
-    console.log("hii see all vals:", allFormValues);
     const errorMessageValidate = validateForm(allFormValues, listOfFormItems);
 
-    errorMessageValidate
-      ? setErrorMessage(errorMessageValidate)
-      : navigate("./Acknowledgement", { state: { ...allFormValues } });
+    if (errorMessageValidate?.errorMessage) {
+      setErrorMessage(errorMessageValidate.errorMessage);
+    } else {
+      navigate("./Acknowledgement", {
+        state: { ...allFormValues, endTime: errorMessageValidate },
+      });
+    }
   };
 
   return (
@@ -82,8 +85,15 @@ const LandingPage = () => {
             // display: "flex",
             alignItems: " center",
             justifyContent: " center",
+            marginTop: "5%",
           }}
         >
+          <p style={{ fontSize: "0.9em", marginTop: 0, marginBottom: 0 }}>
+            Welcome to the pod booking portal for Library XYZ!
+          </p>
+          <p style={{ fontSize: "0.9em", marginTop: 0 }}>
+            Opening Hours: 12PM to 8PM daily!
+          </p>
           <Col
             span={24}
             style={{
@@ -104,7 +114,7 @@ const LandingPage = () => {
 
                   switch (type) {
                     case "textInput":
-                      return <FormInput payload={{ ...formContent }} />;
+                      return <FormInput payload={formContent} />;
                     case "dropdown":
                       return <FormDropdown payload={formContent} />;
                     case "datePicker":
