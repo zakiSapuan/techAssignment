@@ -1,9 +1,9 @@
 # Getting Started
 
-$ git clone <project_url>
-$ cd /<project_folder>
-$ npm i
-$ npm start
+- $ git clone <project_url>
+- $ cd /<project_folder>
+- $ npm i
+- $ npm start
 
 # Main Tech Stack
 
