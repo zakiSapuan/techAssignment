@@ -7,7 +7,6 @@ import FormDropdown from "./formHelper/formDropdown";
 import FormDatePicker from "./formHelper/formDatepicker";
 import validateForm from "./formHelper/formValidator";
 import { useNavigate } from "react-router-dom";
-import moment from "moment";
 
 const LandingPage = () => {
   const [form] = Form.useForm();
@@ -31,10 +30,6 @@ const LandingPage = () => {
         ? {
             [key]: value,
             podLocation: podLocation[parseInt(value) - 1],
-          }
-        : key === "dateOfBooking"
-        ? {
-            [key]: moment(value).format("DD MMM YYYY"),
           }
         : {
             [key]: value,
@@ -76,7 +71,7 @@ const LandingPage = () => {
         }}
       >
         <Card
-          title={"Library XYZ - Pod Booking Portal"}
+          title={<Typography>Library XYZ - Pod Booking Portal</Typography>}
           bordered={false}
           style={{
             width: "50%",

@@ -1,4 +1,4 @@
-import moment from "moment";
+const dayjs = require("dayjs");
 
 const validateBookingTimeSlot = (formValues) => {
   const {
@@ -7,16 +7,16 @@ const validateBookingTimeSlot = (formValues) => {
     dateOfBooking,
     currentDate: currentDatePayload,
   } = formValues;
-  const currentDate = moment(currentDatePayload) || moment();
+  const currentDate = dayjs(currentDatePayload) || dayjs();
   const hoursAndMins = timingOfBooking.split(".");
-  const startTime = moment(dateOfBooking)
-    .hours(parseInt(hoursAndMins[0]) + 12)
-    .minutes(hoursAndMins[1] || "00");
+  const startTime = dayjs(dateOfBooking)
+    .hour(parseInt(hoursAndMins[0]) + 12)
+    .minute(hoursAndMins[1] || "00");
   let endDate;
 
   switch (durationOfBooking) {
     case "30 mins":
-      endDate = moment(startTime).add("30", "minutes");
+      endDate = dayjs(startTime).add("30", "minute");
       break;
 
     default:
@@ -25,17 +25,17 @@ const validateBookingTimeSlot = (formValues) => {
         durationOfBooking.length - 5
       );
       const valueToInt = parseFloat(extractedValue);
-      endDate = moment(startTime).add(`${valueToInt * 60}`, "minutes");
+      endDate = dayjs(startTime).add(`${valueToInt * 60}`, "minute");
       break;
   }
 
-  if (endDate > moment(startTime).hours(20).minutes("00"))
-    return "pastStoreTime";
+  if (endDate > dayjs(startTime).hour(20).minute("00")) return "pastStoreTime";
   if (startTime < currentDate) return "pastCurrentTime";
 
   return {
-    endTime: moment(endDate).add("12", "hours").format("h.mm"),
-    startTime: moment(startTime).format("h.mm"),
+    endTime: dayjs(endDate).add("12", "hour").format("h.mm"),
+    startTime: dayjs(startTime).format("h.mm"),
+    dateOfBooking: dayjs(dateOfBooking).format("D MMM YYYY"),
   };
 };
 
