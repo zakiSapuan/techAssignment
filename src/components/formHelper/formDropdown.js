@@ -13,6 +13,7 @@ const FormDropdown = ({ payload = {} }) => {
     helperText,
     showPostText = "",
   } = payload;
+  if (!key || !name || !onClick) return;
 
   return (
     <Form.Item

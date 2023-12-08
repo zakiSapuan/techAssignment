@@ -73,7 +73,7 @@ const Acknowledgement = () => {
           <Button
             type="primary"
             style={{ marginTop: "1em", marginLeft: "1em" }}
-            href={"../"}
+            href={"/"}
           >
             <Typography.Text style={{ color: "white" }}>Home</Typography.Text>
           </Button>

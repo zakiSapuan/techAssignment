@@ -3,6 +3,7 @@ import { Form, Input } from "antd";
 
 const FormInput = ({ payload = {} }) => {
   const { key, name, disabled, onClick } = payload;
+  if (!key || !name || !onClick) return;
 
   return (
     <Form.Item
