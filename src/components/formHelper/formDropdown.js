@@ -37,8 +37,7 @@ const FormDropdown = ({ payload = {} }) => {
         {values.map((item) => {
           return (
             <Option value={item} name={item} key={item}>
-              {item}
-              {showPostText}
+              {item} {showPostText}
             </Option>
           );
         })}

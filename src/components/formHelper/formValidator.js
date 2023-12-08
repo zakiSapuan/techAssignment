@@ -1,23 +1,23 @@
 import moment from "moment";
 
 const validateBookingTimeSlot = (formValues) => {
-  const timeOfBooking = formValues.timingOfBooking;
-  const durationOfBooking = formValues.durationOfBooking;
-  const dateOfBooking = formValues.dateOfBooking;
-  const hoursAndMins = timeOfBooking.split(".");
+  const {
+    timingOfBooking,
+    durationOfBooking,
+    dateOfBooking,
+    currentDate: currentDatePayload,
+  } = formValues;
+  const currentDate = moment(currentDatePayload) || moment();
+  const hoursAndMins = timingOfBooking.split(".");
   const startTime = moment(dateOfBooking)
     .hours(parseInt(hoursAndMins[0]) + 12)
     .minutes(hoursAndMins[1] || "00");
+  let endDate;
 
   switch (durationOfBooking) {
     case "30 mins":
-      const endDateHalfHour = moment(startTime).add("30", "minutes");
-
-      if (endDateHalfHour > moment(startTime).hours(20).minutes("00"))
-        return true;
-      if (startTime < moment()) return "pastCurrentTime";
-
-      return moment(endDateHalfHour).add("12", "hours").format("h.mm");
+      endDate = moment(startTime).add("30", "minutes");
+      break;
 
     default:
       const extractedValue = durationOfBooking.slice(
@@ -25,14 +25,18 @@ const validateBookingTimeSlot = (formValues) => {
         durationOfBooking.length - 5
       );
       const valueToInt = parseFloat(extractedValue);
-      const endDate = moment(startTime).add(`${valueToInt * 60}`, "minutes");
-
-      if (endDate > moment(startTime).hours(20).minutes("00"))
-        return "pastStoreTime";
-      if (startTime < moment()) return "pastCurrentTime";
-
-      return moment(endDate).add("12", "hours").format("h.mm");
+      endDate = moment(startTime).add(`${valueToInt * 60}`, "minutes");
+      break;
   }
+
+  if (endDate > moment(startTime).hours(20).minutes("00"))
+    return "pastStoreTime";
+  if (startTime < currentDate) return "pastCurrentTime";
+
+  return {
+    endTime: moment(endDate).add("12", "hours").format("h.mm"),
+    startTime: moment(startTime).format("h.mm"),
+  };
 };
 
 const validateAllRequiredFormValues = (formValues, listOfFormItems) => {

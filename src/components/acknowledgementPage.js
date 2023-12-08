@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Row, Col, Card, List, Typography } from "antd";
 import "../App.css";
-import { formItems, endTimeItem } from "./constant";
+import { acknowledgementItems, additionalFormItems } from "./constant";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Acknowledgement = () => {
@@ -32,7 +32,7 @@ const Acknowledgement = () => {
         }}
       >
         <Card
-          title={"Library XYZ - Acknowledgement Page"}
+          title={<Typography>Library XYZ - Acknowledgement Page</Typography>}
           bordered={false}
           style={{
             width: "50%",
@@ -43,9 +43,9 @@ const Acknowledgement = () => {
             marginTop: "10%",
           }}
         >
-          <p style={{ fontSize: "0.9em", marginTop: 0 }}>
-            Please confirm your inputs and selections
-          </p>
+          <Typography.Text style={{ marginTop: 0, color: "green" }}>
+            Your booking has been confirmed!
+          </Typography.Text>
           <Col
             span={24}
             style={{
@@ -53,17 +53,19 @@ const Acknowledgement = () => {
               alignItems: " center",
               justifyContent: " center",
             }}
+            bordered={false}
           >
             <List
-              style={{ textAlign: "left" }}
-              bordered
-              dataSource={[...formItems, ...endTimeItem]}
+              style={{
+                textAlign: "left",
+              }}
+              bordered={false}
+              dataSource={[...acknowledgementItems, ...additionalFormItems]}
               renderItem={(item) => (
                 <List.Item>
-                  <Typography.Text mark>[{item.name}]</Typography.Text>
-                  {": "}
-                  {formValues[item.key]}
-                  {item.showPostText}
+                  <Typography.Text>
+                    {item.name}: {formValues[item.key]} {item.showPostText}
+                  </Typography.Text>
                 </List.Item>
               )}
             />
@@ -73,7 +75,7 @@ const Acknowledgement = () => {
             style={{ marginTop: "1em", marginLeft: "1em" }}
             href={"../"}
           >
-            Confirm
+            <Typography.Text style={{ color: "white" }}>Home</Typography.Text>
           </Button>
         </Card>
       </Col>

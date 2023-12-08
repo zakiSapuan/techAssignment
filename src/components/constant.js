@@ -75,6 +75,10 @@ export const formItems = [
   },
 ];
 
+export const acknowledgementItems = [
+  ...[formItems[0], formItems[2], formItems[3], formItems[4]],
+];
+
 export const layout = {
   labelCol: {
     span: 8,
@@ -91,7 +95,13 @@ export const tailLayout = {
   },
 };
 
-export const endTimeItem = [
+export const additionalFormItems = [
+  {
+    key: "startTime",
+    name: "Start Time",
+    type: "textInput",
+    showPostText: "PM",
+  },
   {
     key: "endTime",
     name: "End Time",
