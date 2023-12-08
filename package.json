@@ -2,7 +2,7 @@
   "name": "temp-tech-assignment",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://github.com/zakiSapuan/techAssignment",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
