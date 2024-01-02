@@ -40,10 +40,13 @@ const validateBookingTimeSlot = (formValues) => {
 };
 
 const validateAllRequiredFormValues = (formValues, listOfFormItems) => {
-  const result = listOfFormItems.filter((item) => {
-    if (!formValues[item.key] || !formValues[item.key] === {}) return item;
-    return;
-  });
+  const result = listOfFormItems.filter(
+    (item) => !formValues[item.key] || !formValues[item.key] === {}
+  );
+  // const result = listOfFormItems.filter((item) => {
+  //   if (!formValues[item.key] || !formValues[item.key] === {}) return item;
+  // return;
+  // });
 
   if (result.length) return true;
   return;

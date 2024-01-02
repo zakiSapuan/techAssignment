@@ -53,6 +53,23 @@ const LandingPage = () => {
     }
   };
 
+  const showFormItems = () => {
+    return listOfFormItems.map((formContent) => {
+      const { type } = formContent;
+
+      switch (type) {
+        case "textInput":
+          return <FormInput payload={formContent} />;
+        case "dropdown":
+          return <FormDropdown payload={formContent} />;
+        case "datePicker":
+          return <FormDatePicker payload={formContent} />;
+        default:
+          return <></>;
+      }
+    });
+  };
+
   return (
     <Row
       style={{
@@ -104,21 +121,7 @@ const LandingPage = () => {
               style={{ width: "100%" }}
               form={form}
             >
-              {listOfFormItems?.length &&
-                listOfFormItems.map((formContent) => {
-                  const { type } = formContent;
-
-                  switch (type) {
-                    case "textInput":
-                      return <FormInput payload={formContent} />;
-                    case "dropdown":
-                      return <FormDropdown payload={formContent} />;
-                    case "datePicker":
-                      return <FormDatePicker payload={formContent} />;
-                    default:
-                      return;
-                  }
-                })}
+              {listOfFormItems?.length && showFormItems()}
               <Form.Item
                 {...tailLayout}
                 key={"button"}
